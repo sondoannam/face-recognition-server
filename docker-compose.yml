@@ -1,0 +1,75 @@
+version: "3.8"
+services:
+  # Database service
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: facetest
+      POSTGRES_DB: facedb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d facedb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # FastAPI server
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=facedb
+      - DB_USER=admin
+      - DB_PASSWORD=facetest
+      - API_KEY=dev_api_key
+    volumes:
+      - ./:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    command: uvicorn main:app --host 0.0.0.0 --reload
+
+  # Gradio UI
+  gradio:
+    build:
+      context: .
+      dockerfile: Dockerfile.gradio
+    restart: always
+    ports:
+      - "7860:7860"
+    environment:
+      - API_BASE_URL=http://api:8000
+    volumes:
+      - ./:/app
+    depends_on:
+      - api
+    command: python gradio_app.py
+
+  # Frontend React app
+  frontend:
+    build:
+      context: ./test-app
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./test-app:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - api
+
+volumes:
+  pgdata:

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Detection App</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Face Detection</h1>
+
+        <div class="video-container">
+            <video id="webcam" autoplay muted playsinline></video>
+            <canvas id="overlay"></canvas>
+        </div>
+
+        <div class="controls">
+            <button id="startCamera">Start Camera</button>
+            <button id="stopCamera" disabled>Stop Camera</button>
+        </div>
+
+        <div class="registration-section">
+            <div class="input-group">
+                <label for="personName">Person Name:</label>
+                <input type="text" id="personName" placeholder="Enter name">
+            </div>
+            <div class="registration-controls">
+                <button id="startRegistration">Start Registration</button>
+                <button id="cancelRegistration" disabled>Cancel Registration</button>
+            </div>
+        </div>
+
+        <div class="captured-images">
+            <h2>Captured Images (<span id="imageCount">0</span>/5)</h2>
+            <div id="imagesContainer" class="images-grid"></div>
+        </div>
+
+        <div class="status">
+            <p id="status-message">Click "Start Camera" to begin.</p>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+
+    <!-- Auto-start camera on page load -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Automatically click the start camera button after a short delay
+            setTimeout(() => {
+                document.getElementById('startCamera').click();
+            }, 500);
+        });
+    </script>
+</body>
+
+</html>

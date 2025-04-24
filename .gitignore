@@ -1,0 +1,25 @@
+# Python virtual environment
+venv/
+
+# Node modules
+node_modules/
+
+test-app/node_modules/
+
+test-app/dist/
+
+test-app/.env
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+/.env
