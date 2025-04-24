@@ -40,22 +40,6 @@ services:
         condition: service_healthy
     command: uvicorn main:app --host 0.0.0.0 --reload
 
-  # Gradio UI
-  gradio:
-    build:
-      context: .
-      dockerfile: Dockerfile.gradio
-    restart: always
-    ports:
-      - "7860:7860"
-    environment:
-      - API_BASE_URL=http://api:8000
-    volumes:
-      - ./:/app
-    depends_on:
-      - api
-    command: python gradio_app.py
-
   # Frontend React app
   frontend:
     build:

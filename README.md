@@ -9,13 +9,12 @@ A robust Face Recognition Server system with REST API and WebSocket capabilities
  git clone https://github.com/sondoannam/face-recognition-server.git
  cd face-recognition-server
 
-# Start the complete stack (API, Database, Gradio UI, and React Frontend)
+# Start the stack (API, Database, and React Frontend)
  docker compose up -d
 ```
 
 - Backend: http://localhost:8000
 - React Frontend: http://localhost:5173
-- Gradio UI: http://localhost:7860
 
 ---
 
@@ -24,7 +23,6 @@ A robust Face Recognition Server system with REST API and WebSocket capabilities
 - **REST API** for quick face registration and recognition
 - **WebSocket Support** for real-time face registration with multiple images
 - **User Management** with database storage for user data and face encodings
-- **Gradio UI** for easy testing and demonstration
 - **Web Client** built with React for integration examples
 - **Robust Error Handling** with comprehensive logging
 - **Database Connection Pooling** for improved performance
@@ -37,7 +35,6 @@ The system consists of the following components:
 - **REST API** (`api.py`): Face registration and recognition endpoints
 - **WebSocket Server** (`ws.py`): Real-time face registration with streaming
 - **Cleanup Process** (`cleanup.py`): Maintenance of cancelled registrations
-- **Web Interface** (`gradio_app.py`): User-friendly UI for testing
 - **Main Application** (`main.py`): FastAPI server setup and configuration
 - **React Client** (`test-app/`): Example web client implementation
 
@@ -46,7 +43,7 @@ The system consists of the following components:
 ### Option 1: Docker Compose (Recommended)
 
 ```bash
-# Start the complete stack (API, Database, Gradio UI, and React Frontend)
+# Start the stack (API, Database, and React Frontend)
 docker compose up -d
 
 docker compose down  # To stop all services
@@ -56,7 +53,6 @@ This will start:
 
 - PostgreSQL database on port 5432
 - FastAPI server on port 8000
-- Gradio UI on port 7860
 - React frontend on port 5173
 
 To run only the database (useful for local development):
@@ -108,6 +104,7 @@ docker compose -f docker-compose.db.yml up -d
 5. Configure environment variables (create a `.env` file in the root for backend, and `test-app/.env` for frontend):
 
    **Backend (.env):**
+
    ```
    DB_HOST=localhost
    DB_PORT=5432
@@ -117,7 +114,9 @@ docker compose -f docker-compose.db.yml up -d
    API_KEY=your_secure_api_key
    API_BASE_URL=http://localhost:8000
    ```
+
    **Frontend (test-app/.env):**
+
    ```
    VITE_API_BASE_URL=http://localhost:8000
    VITE_API_KEY=your_secure_api_key
@@ -129,13 +128,7 @@ docker compose -f docker-compose.db.yml up -d
    uvicorn main:app --reload
    ```
 
-7. In a separate terminal, start the Gradio interface (optional):
-
-   ```bash
-   python gradio_app.py
-   ```
-
-8. To run the React client:
+7. To run the React client:
    ```bash
    cd test-app
    pnpm install
