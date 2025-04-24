@@ -32,7 +32,7 @@ services:
       - DB_NAME=facedb
       - DB_USER=admin
       - DB_PASSWORD=facetest
-      - API_KEY=dev_api_key
+      - API_KEY=myvery-secretkey
     volumes:
       - ./:/app
     depends_on:
@@ -52,6 +52,7 @@ services:
       - /app/node_modules
     environment:
       - VITE_API_URL=http://localhost:8000
+      - VITE_API_KEY=myvery-secretkey
     depends_on:
       - api
 
